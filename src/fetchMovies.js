@@ -10,9 +10,9 @@ const options = {
   }
 };
 
-export const fetchTrendingMovies = async () => {
+export const fetchTrendingMovies = async (currentPage) => {
   try {
-    const response = await axios.get(`/3/trending/movie/day?api_key=${API_KEY}`, options);
+    const response = await axios.get(`/3/trending/movie/day?api_key=${API_KEY}&page=${currentPage}`, options);
     return response.data.results;
   } catch (error) {
     console.error('Error fetching trending movies:', error);
@@ -39,11 +39,33 @@ export const fetchMoviesList = async (searchQuery, currentPage) => {
 
 export const fetchMovieById = async (movie_id) => {
   try {
-    const response = await axios.get(`/3/movie/${movie_id}`, options);
+    const response = await axios.get(`/3/movie/${movie_id}?api_key=${API_KEY}`, options);
     return response.data;
   } catch (error) {
     console.error('Error fetching movie by ID:', error);
     throw error;
   }
 }
+
+export const fetchMovieCastById = async (movie_id) => {
+  try {
+    const response = await axios.get(`/3/movie/${movie_id}/credits`, options);
+    return response.data.cast;
+  } catch (error) {
+    console.error('Error fetching movie cast by ID:', error);
+    throw error;
+  }
+}
+
+export const fetchMovieRevievsById = async (movie_id) => {
+  try {
+    const response = await axios.get(`/3/movie/${movie_id}/reviews`, options);
+    return response.data.results;
+  } catch (error) {
+    console.error('Error fetching movie cast by ID:', error);
+    throw error;
+  }
+}
+
+
 
