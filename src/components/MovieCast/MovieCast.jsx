@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { nanoid } from "nanoid";
 import { useParams } from "react-router-dom";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import Loader from "../../components/Loader/Loader";
@@ -29,16 +30,14 @@ export default function MovieCast() {
   return (
     <div>
       {cast &&
-        cast.map((actor, index) => (
-          <li key={`${actor.id}-${index}`}>
-            <img
-              src={
-                actor.profile_path
-                  ? `https://image.tmdb.org/t/p/w500/${actor.profile_path}`
-                  : "defaultImg"
-              }
-              alt={actor.name}
-            />
+        cast.map((actor) => (
+          <li key={nanoid()}>
+            {actor.profile_path && (
+              <img
+                src={`https://image.tmdb.org/t/p/w500/${actor.profile_path}`}
+                alt={actor.name}
+              />
+            )}
             <div>
               <p>{actor.name}</p>
               <p>

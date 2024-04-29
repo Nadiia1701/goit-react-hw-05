@@ -22,14 +22,15 @@ export const fetchTrendingMovies = async (currentPage) => {
 
 
 export const fetchMoviesList = async (searchQuery, currentPage) => {
-      try {
-     const response = await axios.get("/3/search/movie", {
-        params: {
-            api_key: API_KEY,
-            query: searchQuery,
-            page: currentPage,
-        }
-    }, options);
+  try {
+    const response = await axios.get("/3/search/movie", {
+      params: {
+        api_key: API_KEY,
+        query: searchQuery,
+        page: currentPage,
+      },
+      ...options,
+    });
     return response.data.results;
   } catch (error) {
     console.error('Error fetching trending movies:', error);
@@ -37,9 +38,9 @@ export const fetchMoviesList = async (searchQuery, currentPage) => {
   }
 }
 
-export const fetchMovieById = async (movie_id) => {
+export const fetchMovieById = async (id) => {
   try {
-    const response = await axios.get(`/3/movie/${movie_id}?api_key=${API_KEY}`, options);
+    const response = await axios.get(`/3/movie/${id}?api_key=${API_KEY}`, options);
     return response.data;
   } catch (error) {
     console.error('Error fetching movie by ID:', error);
@@ -47,9 +48,9 @@ export const fetchMovieById = async (movie_id) => {
   }
 }
 
-export const fetchMovieCastById = async (movie_id) => {
+export const fetchMovieCastById = async (id) => {
   try {
-    const response = await axios.get(`/3/movie/${movie_id}/credits`, options);
+    const response = await axios.get(`/3/movie/${id}/credits?api_key=${API_KEY}`, options);
     return response.data.cast;
   } catch (error) {
     console.error('Error fetching movie cast by ID:', error);
@@ -57,9 +58,9 @@ export const fetchMovieCastById = async (movie_id) => {
   }
 }
 
-export const fetchMovieRevievsById = async (movie_id) => {
+export const fetchMovieRevievsById = async (id) => {
   try {
-    const response = await axios.get(`/3/movie/${movie_id}/reviews`, options);
+    const response = await axios.get(`/3/movie/${id}/reviews?api_key=${API_KEY}`, options);
     return response.data.results;
   } catch (error) {
     console.error('Error fetching movie cast by ID:', error);

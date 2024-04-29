@@ -4,14 +4,12 @@ import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import Loader from "../../components/Loader/Loader";
 import { fetchMovieById } from "../../fetchMovies";
 import MovieInfo from "../../components/MovieInfo/MovieInfo";
-// import MovieCast from "../../components/MovieCast/MovieCast";
-// import MovieReviews from "../../components/MovieReviews/MovieReviews";
 
 export default function MovieDetailsPage() {
   const [movie, setMovie] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
-  const { movie_id } = useParams();
+  const { movieId } = useParams();
 
   const location = useLocation();
   const backLinkURLRef = useRef(location.state ?? "/movies");
@@ -21,7 +19,7 @@ export default function MovieDetailsPage() {
       try {
         setError(false);
         setIsLoading(true);
-        const data = await fetchMovieById(movie_id);
+        const data = await fetchMovieById(movieId);
         setMovie(data);
       } catch (error) {
         setError(true);
@@ -30,20 +28,7 @@ export default function MovieDetailsPage() {
       }
     }
     fetchMovie();
-  }, [movie_id]);
-
-  //   const [showCast, setShowCast] = useState(false);
-  //   const [showReviews, setShowReviews] = useState(false);
-
-  //   const toggleCast = () => {
-  //     setShowCast(true);
-  //     setShowReviews(false);
-  //   };
-
-  //   const toggleReviews = () => {
-  //     setShowCast(false);
-  //     setShowReviews(true);
-  //   };
+  }, [movieId]);
 
   return (
     <div>
@@ -53,20 +38,17 @@ export default function MovieDetailsPage() {
       {movie && <MovieInfo movie={movie} />}
       {error && <ErrorMessage />}
       {isLoading && <Loader />}
-      {/* <h4>Additional information</h4> */}
       <ul>
         <li>
-          <Link to={`/movies/${movie_id}/cast`}>Cast</Link>
+          <Link to={`/movies/${movieId}/cast`}>Cast</Link>
         </li>
         <li>
-          <Link to={`/movies/${movie_id}/reviews`}>Reviews</Link>
+          <Link to={`/movies/${movieId}/reviews`}>Reviews</Link>
         </li>
       </ul>
       <Suspense fallback={<Loader />}>
         <Outlet />
       </Suspense>
-      {/* {showCast && <MovieCast movieId={movieId} />}
-      {showReviews && <MovieReviews movieId={movieId} />} */}
     </div>
   );
 }

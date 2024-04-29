@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { nanoid } from "nanoid";
 import { useParams } from "react-router-dom";
 import { fetchMovieRevievsById } from "../../fetchMovies";
 import Loader from "../Loader/Loader";
@@ -32,7 +33,7 @@ export default function MovieReviews() {
       {error && <ErrorMessage />}
       <ul>
         {reviews.map((review) => (
-          <li key={review.id}>
+          <li key={nanoid()}>
             <p>
               Author: <span>{review.author}</span>
             </p>
